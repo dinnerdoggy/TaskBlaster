@@ -1,0 +1,10 @@
+namespace TaskBlaster.Models;
+
+public class  User
+{
+    public int Id { get; set; }
+    public string? Uid { get; set; }
+
+    // Navigation properties
+    public List<Category>? Categories { get; set; }
+}
