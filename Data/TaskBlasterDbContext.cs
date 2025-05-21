@@ -18,12 +18,22 @@ public class TaskBlasterDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Category>()
+        .HasOne(c => c.User)
+        .WithMany(u => u.Categories)
+        .HasForeignKey(c => c.Uid)
+        .HasPrincipalKey(u => u.Uid);
+
+        modelBuilder.Entity<User>().HasData(
+            new User { Id = 1, Uid = "a"}    
+        );
+
         // Seed Categories
         modelBuilder.Entity<Category>().HasData(
-            new Category { Id = 1, Title = "Work" },
-            new Category { Id = 2, Title = "Home" },
-            new Category { Id = 3, Title = "Personal Goals" },
-            new Category { Id = 4, Title = "Errands" }
+            new Category { Id = 1, Uid = "a", Title = "Work" },
+            new Category { Id = 2, Uid = "a", Title = "Home" },
+            new Category { Id = 3, Uid = "a", Title = "Personal Goals" },
+            new Category { Id = 4, Uid = "a", Title = "Errands" }
         );
 
         // Seed Resources
@@ -42,7 +52,8 @@ public class TaskBlasterDbContext : DbContext
                 Title = "Submit monthly report",
                 Description = "Gather all department data and submit the final report to the manager.",
                 IsCompleted = false,
-                CategoryId = 1
+                CategoryId = 1,
+                Priority = "High"
             },
             new Duty
             {
@@ -50,7 +61,8 @@ public class TaskBlasterDbContext : DbContext
                 Title = "Clean the garage",
                 Description = "Organize tools and dispose of unwanted items.",
                 IsCompleted = false,
-                CategoryId = 2
+                CategoryId = 2,
+                Priority = "Medium"
             },
             new Duty
             {
@@ -58,7 +70,8 @@ public class TaskBlasterDbContext : DbContext
                 Title = "Run 5K",
                 Description = "Jog around the neighborhood for cardio.",
                 IsCompleted = true,
-                CategoryId = 3
+                CategoryId = 3,
+                Priority = "Low"
             }
         );
 
