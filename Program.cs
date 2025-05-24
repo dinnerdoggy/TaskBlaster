@@ -4,8 +4,16 @@ using TaskBlaster.Interfaces;
 using TaskBlaster.Repositories;
 using TaskBlaster.Services;
 using TaskBlaster.Endpoints;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Set the JSON serializer options to avoid object cycling error
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 var connectionString = builder.Configuration.GetConnectionString("TaskBlasterDbConnectionString");
 builder.Services.AddDbContext<TaskBlasterDbContext>(options => options.UseNpgsql(connectionString));
