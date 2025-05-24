@@ -1,0 +1,12 @@
+namespace TaskBlaster.Models;
+
+public class Category
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+
+    // Navigation properties
+    public User User { get; set; }
+    public string Uid { get; set; }
+    public List<Duty>? Duties { get; set; }
+}

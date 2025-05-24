@@ -1,0 +1,12 @@
+namespace TaskBlaster.Models;
+
+public class  Comment
+{
+    public int Id { get; set; }
+    public string? Content { get; set; }
+    public DateTime? TimeStamp { get; set; }
+
+    // Navigation properties
+    public int? DutyId { get; set; }
+    public Duty? Duty { get; set; }
+}

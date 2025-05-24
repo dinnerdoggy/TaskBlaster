@@ -1,0 +1,22 @@
+# Ignore build artifacts
+bin/
+obj/
+
+# Ignore user-specific VS/IDE settings
+.vs/
+*.user
+*.suo
+
+# Ignore test results and coverage reports
+TestResults/
+*.coverage
+*.coveragexml
+
+# Ignore runtime files
+*.db
+*.db-shm
+*.db-wal
+
+# Ignore OS junk
+.DS_Store
+Thumbs.db
