@@ -1,10 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using Taskblaster.Data;
+using TaskBlaster.Data;
+using TaskBlaster.Interfaces;
+using TaskBlaster.Repositories;
+using TaskBlaster.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("TaskBlasterDbConnectionString");
 builder.Services.AddDbContext<TaskBlasterDbContext>(options => options.UseNpgsql(connectionString));
+
+// Registering the repository and service
+builder.Services.AddScoped<IDutyRepository, DutyRepository>();
+builder.Services.AddScoped<IDutyService, DutyService>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

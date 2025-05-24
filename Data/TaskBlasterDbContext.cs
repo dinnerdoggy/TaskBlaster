@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TaskBlaster.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Taskblaster.Data;
+namespace TaskBlaster.Data;
 
 public class TaskBlasterDbContext : DbContext
 {
