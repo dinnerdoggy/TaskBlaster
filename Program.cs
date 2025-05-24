@@ -3,6 +3,7 @@ using TaskBlaster.Data;
 using TaskBlaster.Interfaces;
 using TaskBlaster.Repositories;
 using TaskBlaster.Services;
+using TaskBlaster.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,5 +29,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapDutyEndpoints();
 
 app.Run();
