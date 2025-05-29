@@ -19,6 +19,8 @@ var connectionString = builder.Configuration.GetConnectionString("TaskBlasterDbC
 builder.Services.AddDbContext<TaskBlasterDbContext>(options => options.UseNpgsql(connectionString));
 
 // Registering the repository and service
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDutyRepository, DutyRepository>();
 builder.Services.AddScoped<IDutyService, DutyService>();
 
@@ -38,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.MapCategoryEndpoints();
 app.MapDutyEndpoints();
 
 app.Run();
