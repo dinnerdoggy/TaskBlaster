@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskBlaster.Data;
@@ -11,9 +12,11 @@ using TaskBlaster.Data;
 namespace TaskBlaster.Migrations
 {
     [DbContext(typeof(TaskBlasterDbContext))]
-    partial class TaskBlasterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250531150027_AddedUserSeed")]
+    partial class AddedUserSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,10 +160,6 @@ namespace TaskBlaster.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<string>("Uid")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -175,8 +174,7 @@ namespace TaskBlaster.Migrations
                             Description = "Gather all department data and submit the final report to the manager.",
                             IsCompleted = false,
                             Priority = "High",
-                            Title = "Submit monthly report",
-                            Uid = "a"
+                            Title = "Submit monthly report"
                         },
                         new
                         {
@@ -185,8 +183,7 @@ namespace TaskBlaster.Migrations
                             Description = "Organize tools and dispose of unwanted items.",
                             IsCompleted = false,
                             Priority = "Medium",
-                            Title = "Clean the garage",
-                            Uid = "a"
+                            Title = "Clean the garage"
                         },
                         new
                         {
@@ -195,8 +192,7 @@ namespace TaskBlaster.Migrations
                             Description = "Jog around the neighborhood for cardio.",
                             IsCompleted = true,
                             Priority = "Low",
-                            Title = "Run 5K",
-                            Uid = "a"
+                            Title = "Run 5K"
                         });
                 });
 

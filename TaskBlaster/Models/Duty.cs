@@ -9,6 +9,9 @@ public class Duty
     public DateTime? DueDate { get; set; }
     public string Priority { get; set; }
 
+    // User Ownership
+    public string Uid { get; set; }
+
     // Navigation properties
     public int? CategoryId { get; set; }
     public Category? Category { get; set; }
