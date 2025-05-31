@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskBlaster.Data;
@@ -11,9 +12,11 @@ using TaskBlaster.Data;
 namespace TaskBlaster.Migrations
 {
     [DbContext(typeof(TaskBlasterDbContext))]
-    partial class TaskBlasterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250531183459_UidOnResourceSeed")]
+    partial class UidOnResourceSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
