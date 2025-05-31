@@ -25,7 +25,8 @@ public class TaskBlasterDbContext : DbContext
         .HasPrincipalKey(u => u.Uid);
 
         modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, Uid = "a"}    
+            new User { Id = 1, Uid = "a" },
+            new User { Id = 2, Uid = "b" }
         );
 
         // Seed Categories
