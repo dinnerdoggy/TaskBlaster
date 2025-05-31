@@ -45,33 +45,68 @@ namespace TaskBlaster.Tests.Services
         }
 
         [Fact]
-        public async Task CreateDutyAsync_ReturnsCreatedDuty()
+        public async Task CreateDutyAsync_ReturnsCreatedDuty_WithResources()
         {
-            var newDuty = new Duty { Title = "New Task", CategoryId = 1 };
+            var newDuty = new Duty
+            {
+                Title = "New Task",
+                CategoryId = 1,
+                Resources = new List<Resource>
+        {
+            new Resource { Id = 1 },
+            new Resource { Id = 2 }
+        }
+            };
             var category = new Category { Id = 1, Uid = uid };
 
             _mockCategoryRepo.Setup(r => r.GetByIdAsync(1, uid)).ReturnsAsync(category);
-            _mockDutyRepo.Setup(r => r.CreateAsync(It.Is<Duty>(d => d.Uid == uid)))
-                         .ReturnsAsync((Duty d) => d);
+            _mockDutyRepo.Setup(r => r.CreateAsync(It.Is<Duty>(d =>
+                d.Uid == uid &&
+                d.Resources != null &&
+                d.Resources.Count == 2 &&
+                d.Resources.Any(r => r.Id == 1) &&
+                d.Resources.Any(r => r.Id == 2)
+            ))).ReturnsAsync((Duty d) => d);
 
             var result = await _service.CreateDutyAsync(newDuty, uid);
 
             Xunit.Assert.NotNull(result);
             Xunit.Assert.Equal("New Task", result.Title);
             Xunit.Assert.Equal(uid, result.Uid);
+            Xunit.Assert.Equal(2, result.Resources.Count);
         }
+
 
         [Fact]
-        public async Task UpdateDutyAsync_ReturnsUpdatedDuty()
+        public async Task UpdateDutyAsync_ReturnsUpdatedDuty_WithResources()
         {
-            var updated = new Duty { Title = "Updated" };
-            _mockDutyRepo.Setup(repo => repo.UpdateAsync(1, updated, uid)).ReturnsAsync(new Duty { Id = 1, Title = "Updated" });
+            var updatePayload = new Duty
+            {
+                Title = "Updated Duty",
+                Resources = new List<Resource>
+        {
+            new Resource { Id = 3 },
+            new Resource { Id = 4 }
+        }
+            };
 
-            var result = await _service.UpdateDutyAsync(1, updated, uid);
+            _mockDutyRepo.Setup(r => r.UpdateAsync(1, updatePayload, uid))
+                .ReturnsAsync(new Duty
+                {
+                    Id = 1,
+                    Title = "Updated Duty",
+                    Resources = updatePayload.Resources
+                });
+
+            var result = await _service.UpdateDutyAsync(1, updatePayload, uid);
 
             Xunit.Assert.NotNull(result);
-            Xunit.Assert.Equal("Updated", result.Title);
+            Xunit.Assert.Equal("Updated Duty", result.Title);
+            Xunit.Assert.Equal(2, result.Resources.Count);
+            Xunit.Assert.Contains(result.Resources, r => r.Id == 3);
+            Xunit.Assert.Contains(result.Resources, r => r.Id == 4);
         }
+
 
         [Fact]
         public async Task DeleteDutyAsync_ReturnsTrue_WhenSuccessful()
