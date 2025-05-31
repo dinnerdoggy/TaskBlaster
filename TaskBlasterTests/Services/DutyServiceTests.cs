@@ -8,26 +8,26 @@ namespace TaskBlaster.Tests.Services
 {
     public class DutyServiceTests
     {
-        private readonly Mock<IDutyRepository> _mockRepo;
+        private readonly Mock<IDutyRepository> _mockDutyRepo;
+        private readonly Mock<ICategoryRepository> _mockCategoryRepo;
         private readonly DutyService _service;
+        private readonly string uid = "a";
 
         public DutyServiceTests()
         {
-            _mockRepo = new Mock<IDutyRepository>();
-            _service = new DutyService(_mockRepo.Object);
+            _mockDutyRepo = new Mock<IDutyRepository>();
+            _mockCategoryRepo = new Mock<ICategoryRepository>();
+            _service = new DutyService(_mockDutyRepo.Object, _mockCategoryRepo.Object);
         }
 
         [Fact]
         public async Task GetAllDutiesAsync_ReturnsDuties()
         {
-            // Arrange
-            var duties = new List<Duty> { new Duty { Id = 1, Title = "Test" } };
-            _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(duties);
+            var duties = new List<Duty> { new Duty { Id = 1, Title = "Test", Uid = uid } };
+            _mockDutyRepo.Setup(repo => repo.GetAllAsync(uid)).ReturnsAsync(duties);
 
-            // Act
-            var result = await _service.GetAllDutiesAsync();
+            var result = await _service.GetAllDutiesAsync(uid);
 
-            // Assert
             Xunit.Assert.Single(result);
             Xunit.Assert.Equal("Test", result.First().Title);
         }
@@ -35,14 +35,11 @@ namespace TaskBlaster.Tests.Services
         [Fact]
         public async Task GetDutyByIdAsync_ReturnsCorrectDuty()
         {
-            // Arrange
-            var duty = new Duty { Id = 1, Title = "Test Duty" };
-            _mockRepo.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(duty);
+            var duty = new Duty { Id = 1, Title = "Test Duty", Uid = uid };
+            _mockDutyRepo.Setup(repo => repo.GetByIdAsync(1, uid)).ReturnsAsync(duty);
 
-            // Act
-            var result = await _service.GetDutyByIdAsync(1);
+            var result = await _service.GetDutyByIdAsync(1, uid);
 
-            // Assert
             Xunit.Assert.NotNull(result);
             Xunit.Assert.Equal("Test Duty", result.Title);
         }
@@ -50,30 +47,28 @@ namespace TaskBlaster.Tests.Services
         [Fact]
         public async Task CreateDutyAsync_ReturnsCreatedDuty()
         {
-            // Arrange
-            var newDuty = new Duty { Title = "New Task" };
-            _mockRepo.Setup(repo => repo.CreateAsync(newDuty)).ReturnsAsync(new Duty { Id = 99, Title = "New Task" });
+            var newDuty = new Duty { Title = "New Task", CategoryId = 1 };
+            var category = new Category { Id = 1, Uid = uid };
 
-            // Act
-            var result = await _service.CreateDutyAsync(newDuty);
+            _mockCategoryRepo.Setup(r => r.GetByIdAsync(1, uid)).ReturnsAsync(category);
+            _mockDutyRepo.Setup(r => r.CreateAsync(It.Is<Duty>(d => d.Uid == uid)))
+                         .ReturnsAsync((Duty d) => d);
 
-            // Assert
+            var result = await _service.CreateDutyAsync(newDuty, uid);
+
             Xunit.Assert.NotNull(result);
             Xunit.Assert.Equal("New Task", result.Title);
-            Xunit.Assert.Equal(99, result.Id);
+            Xunit.Assert.Equal(uid, result.Uid);
         }
 
         [Fact]
         public async Task UpdateDutyAsync_ReturnsUpdatedDuty()
         {
-            // Arrange
             var updated = new Duty { Title = "Updated" };
-            _mockRepo.Setup(repo => repo.UpdateAsync(1, updated)).ReturnsAsync(new Duty { Id = 1, Title = "Updated" });
+            _mockDutyRepo.Setup(repo => repo.UpdateAsync(1, updated, uid)).ReturnsAsync(new Duty { Id = 1, Title = "Updated" });
 
-            // Act
-            var result = await _service.UpdateDutyAsync(1, updated);
+            var result = await _service.UpdateDutyAsync(1, updated, uid);
 
-            // Assert
             Xunit.Assert.NotNull(result);
             Xunit.Assert.Equal("Updated", result.Title);
         }
@@ -81,27 +76,21 @@ namespace TaskBlaster.Tests.Services
         [Fact]
         public async Task DeleteDutyAsync_ReturnsTrue_WhenSuccessful()
         {
-            // Arrange
-            _mockRepo.Setup(repo => repo.DeleteAsync(1)).ReturnsAsync(true);
+            _mockDutyRepo.Setup(repo => repo.DeleteAsync(1, uid)).ReturnsAsync(true);
 
-            // Act
-            var result = await _service.DeleteDutyAsync(1);
+            var result = await _service.DeleteDutyAsync(1, uid);
 
-            // Assert
             Xunit.Assert.True(result);
         }
 
         [Fact]
         public async Task GetDutiesByCategoryIdAsync_ReturnsFilteredDuties()
         {
-            // Arrange
-            var duties = new List<Duty> { new Duty { Id = 1, CategoryId = 5 } };
-            _mockRepo.Setup(r => r.GetDutiesByCategoryIdAsync(5)).ReturnsAsync(duties);
+            var duties = new List<Duty> { new Duty { Id = 1, CategoryId = 5, Uid = uid } };
+            _mockDutyRepo.Setup(r => r.GetDutiesByCategoryIdAsync(5, uid)).ReturnsAsync(duties);
 
-            // Act
-            var result = await _service.GetDutiesByCategoryIdAsync(5);
+            var result = await _service.GetDutiesByCategoryIdAsync(5, uid);
 
-            // Assert
             Xunit.Assert.Single(result);
             Xunit.Assert.Equal(5, result.First().CategoryId);
         }
@@ -109,13 +98,10 @@ namespace TaskBlaster.Tests.Services
         [Fact]
         public async Task ToggleDutyCompletionAsync_ReturnsTrue_WhenSuccessful()
         {
-            // Arrange
-            _mockRepo.Setup(r => r.ToggleDutyCompletionAsync(1)).ReturnsAsync(true);
+            _mockDutyRepo.Setup(r => r.ToggleDutyCompletionAsync(1, uid)).ReturnsAsync(true);
 
-            // Act
-            var result = await _service.ToggleDutyCompletionAsync(1);
+            var result = await _service.ToggleDutyCompletionAsync(1, uid);
 
-            // Assert
             Xunit.Assert.True(result);
         }
     }

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TaskBlaster.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,7 +53,8 @@ public class TaskBlasterDbContext : DbContext
                 Description = "Gather all department data and submit the final report to the manager.",
                 IsCompleted = false,
                 CategoryId = 1,
-                Priority = "High"
+                Priority = "High",
+                Uid = "a"
             },
             new Duty
             {
@@ -63,7 +63,8 @@ public class TaskBlasterDbContext : DbContext
                 Description = "Organize tools and dispose of unwanted items.",
                 IsCompleted = false,
                 CategoryId = 2,
-                Priority = "Medium"
+                Priority = "Medium",
+                Uid = "a"
             },
             new Duty
             {
@@ -72,7 +73,8 @@ public class TaskBlasterDbContext : DbContext
                 Description = "Jog around the neighborhood for cardio.",
                 IsCompleted = true,
                 CategoryId = 3,
-                Priority = "Low"
+                Priority = "Low",
+                Uid = "a"
             }
         );
 
