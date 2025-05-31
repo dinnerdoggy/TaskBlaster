@@ -23,6 +23,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IDutyRepository, DutyRepository>();
 builder.Services.AddScoped<IDutyService, DutyService>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -42,5 +44,6 @@ app.UseHttpsRedirection();
 
 app.MapCategoryEndpoints();
 app.MapDutyEndpoints();
+app.MapCommentEndpoints();
 
 app.Run();
