@@ -38,10 +38,10 @@ public class TaskBlasterDbContext : DbContext
 
         // Seed Resources
         modelBuilder.Entity<Resource>().HasData(
-            new Resource { Id = 1, Title = "Laptop" },
-            new Resource { Id = 2, Title = "Vacuum Cleaner" },
-            new Resource { Id = 3, Title = "Notebook" },
-            new Resource { Id = 4, Title = "Car" }
+            new Resource { Id = 1, Title = "Laptop", Uid = "a" },
+            new Resource { Id = 2, Title = "Vacuum Cleaner", Uid = "a" },
+            new Resource { Id = 3, Title = "Notebook", Uid = "a" },
+            new Resource { Id = 4, Title = "Car", Uid = "a" }
         );
 
         // Seed Duties
