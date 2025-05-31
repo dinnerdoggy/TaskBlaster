@@ -8,5 +8,9 @@ public class Resource
     public string? Type { get; set; }
     public string? Url { get; set; }
 
+    // User Ownership
+    public string Uid { get; set; }
+
+    // Navigation property
     public List<Duty>? Duties { get; set; }
 }
