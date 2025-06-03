@@ -19,6 +19,7 @@ This project is ideal as the backend foundation for a to-do app or goal tracking
 - **Full CRUD on all four entities.
 
 ## Video Walkthrough of TaskBlaster API
+https://www.loom.com/share/c6f85bb2e74e43e597478490652f223a?sid=3b557395-22e7-434b-bee7-e84f15312c60
 
 ## Relevant Links
 - [Postman Collection](https://documenter.getpostman.com/view/36624789/2sB2qi7H6K)
