@@ -18,6 +18,13 @@ This project is ideal as the backend foundation for a to-do app or goal tracking
 - **User-Specific Data**: Uses Firebase UID to ensure secure, user-isolated data access.
 - **Full CRUD on all four entities.
 
+## Video Walkthrough of TaskBlaster API
+
+## Relevant Links
+- [Postman Collection](https://documenter.getpostman.com/view/36624789/2sB2qi7H6K)
+- [ERD](https://drawsql.app/teams/nss-49/diagrams/manage-tasker)
+- [GitHub Project Board](https://github.com/users/dinnerdoggy/projects/9/views/1)
+
 ## Code Snippet
 Here’s how to POST a new Duty with linked resources:
 ```json
