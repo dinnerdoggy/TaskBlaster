@@ -20,6 +20,11 @@ This project is ideal as the backend foundation for a to-do app or goal tracking
 
 ## Video Walkthrough of TaskBlaster API
 https://www.loom.com/share/c6f85bb2e74e43e597478490652f223a?sid=3b557395-22e7-434b-bee7-e84f15312c60
+## Walkthrough of every endpoint
+https://www.loom.com/share/4bbacb84b1974bdeb8e81b9d31e558c0
+https://www.loom.com/share/c2b7b804d8754ebf8e01c5c14519d2cd
+## Unit Tests Demonstration
+https://www.loom.com/share/87d604878ab74cc7891dd2bf643a4811
 
 ## Relevant Links
 - [Postman Collection](https://documenter.getpostman.com/view/36624789/2sB2qi7H6K)
