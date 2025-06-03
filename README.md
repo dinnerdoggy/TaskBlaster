@@ -25,6 +25,8 @@ This project is ideal as the backend foundation for a to-do app or goal tracking
 - https://www.loom.com/share/c2b7b804d8754ebf8e01c5c14519d2cd
 ## Unit Tests Demonstration
 - https://www.loom.com/share/87d604878ab74cc7891dd2bf643a4811
+## Artifacts
+- https://www.loom.com/share/bd7c922457424884a219ec6153ccd0ca
 
 ## Relevant Links
 - [Postman Collection](https://documenter.getpostman.com/view/36624789/2sB2qi7H6K)
