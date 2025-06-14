@@ -1,6 +1,5 @@
 using TaskBlaster.Interfaces;
 using TaskBlaster.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace TaskBlaster.Endpoints
 {
@@ -61,7 +60,6 @@ namespace TaskBlaster.Endpoints
             });
         }
 
-        // Helper method for local testing
         private static string GetUid(HttpContext context)
         {
             // Use header if available, otherwise fallback to test UID
