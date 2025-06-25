@@ -27,6 +27,8 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IResourceRepository, ResourceRepository>();
 builder.Services.AddScoped<IResourceService, ResourceService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -58,5 +60,6 @@ app.MapCategoryEndpoints();
 app.MapDutyEndpoints();
 app.MapCommentEndpoints();
 app.MapResourceEndpoints();
+app.MapUserEndpoints();
 
 app.Run();
