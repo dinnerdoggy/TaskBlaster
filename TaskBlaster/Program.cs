@@ -62,4 +62,10 @@ app.MapCommentEndpoints();
 app.MapResourceEndpoints();
 app.MapUserEndpoints();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<TaskBlasterDbContext>();
+    dbContext.Database.Migrate();
+}
+
 app.Run();
