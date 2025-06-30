@@ -1,10 +1,10 @@
-# Use official .NET runtime as base image for final container
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+# Use official .NET 8 runtime as base image for final container
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-# Use SDK image to build the app
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+# Use .NET 8 SDK image to build the app
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy solution and project files
