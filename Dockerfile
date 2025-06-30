@@ -1,26 +1,28 @@
-# Use official .NET 8 runtime as base image for final container
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 80
-
-# Use .NET 8 SDK image to build the app
+# Stage 1: Build Stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy solution and project files
-COPY ["TaskBlaster/TaskBlaster.csproj", "TaskBlaster/"]
+# Restore
+COPY ["src/TaskBlaster/TaskBlaster.csproj", "TaskBlaster/"]
+RUN dotnet restore 'TaskBlaster/TaskBlaster.csproj'
+
+# Build
+COPY ["src/TaskBlaster", "TaskBlaster/"]
 WORKDIR /src/TaskBlaster
+RUN dotnet build 'TaskBlaster.csproj' -c Release -o /app/build
 
-# Restore dependencies
-RUN dotnet restore "TaskBlaster.csproj"
 
-# Copy everything else and build
-COPY . .
-RUN dotnet build "TaskBlaster.csproj" -c Release -o /app/build
-RUN dotnet publish "TaskBlaster.csproj" -c Release -o /app/publish
 
-# Final image
-FROM base AS final
+# Stage 2: Publish Stage
+FROM build as publish
+RUN dotnet publish 'TaskBlaster.csproj' -c Release -o /app/publish
+
+
+
+# Stage 3: Run Stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+ENV ASPNETCORE_HTTP_PORTS=80
+EXPOSE 80
 WORKDIR /app
-COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "TaskBlaster.dll"]
+COPY --from=publish /app/publish .
+ENTRYPOINT [ "dotnet", "TaskBlaster.dll" ]
