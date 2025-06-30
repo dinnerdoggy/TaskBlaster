@@ -38,7 +38,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
-        policy => policy.WithOrigins("http://localhost:3000") // Allow requests from frontend
+        policy => policy.WithOrigins("http://localhost:3000",
+                        "https://taskblaster.netlify.app")
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
