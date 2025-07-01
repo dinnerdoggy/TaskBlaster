@@ -15,8 +15,12 @@ builder.Services.Configure<JsonOptions>(options =>
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
-var connectionString = builder.Configuration.GetConnectionString("TaskBlasterDbConnectionString");
-builder.Services.AddDbContext<TaskBlasterDbContext>(options => options.UseNpgsql(connectionString));
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
+    ?? builder.Configuration.GetConnectionString("TaskBlasterDbConnectionString");
+
+builder.Services.AddDbContext<TaskBlasterDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
 
 // Registering the repository and service
 builder.Services.AddScoped<ICategoryService, CategoryService>();
